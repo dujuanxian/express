@@ -11,6 +11,6 @@ export class SearchService {
   constructor ( private http: HttpClient ) { }
 
   getTrackingList(number: string): Observable<ITracking[]> {
-    return this.http.get<ITracking[]>(`/tracking?number=${number}`);
+    return this.http.get<ITracking[]>(`http://localhost:3000/tracking?number=${number}`);
   }
 }
