@@ -2,22 +2,27 @@ import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core
 
 import { SearchComponent } from './search.component';
 import { FormsModule } from '@angular/forms';
-import { By } from '@angular/platform-browser';
+import { SearchService } from './search.service';
+import { throwError } from 'rxjs/internal/observable/throwError';
+import { of } from 'rxjs/internal/observable/of';
 
 describe('SearchComponent', () => {
   let component: SearchComponent;
   let fixture: ComponentFixture<SearchComponent>;
+  let searchService: SearchService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ SearchComponent ],
-      imports: [ FormsModule ]
+      imports: [ FormsModule ],
+      providers: [ SearchService ]
     }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SearchComponent);
     component = fixture.componentInstance;
+    searchService = fixture.debugElement.injector.get(SearchService);
     fixture.detectChanges();
   });
 
@@ -63,6 +68,21 @@ describe('SearchComponent', () => {
 
       const errorMessage: HTMLElement = hostElement.querySelector('.error-message');
       expect(errorMessage).toBeNull();
+    });
+  });
+
+  describe('should search number', () => {
+    it ('success with tracking list', function () {
+      const trackingList = [{
+        date: '2018-01-01 10:10',
+        status: '已出库'
+      }];
+      spyOn(searchService, 'getTrackingList').and.returnValue(of({ data: trackingList }));
+
+      component.number = '1234567890';
+      component.searchNumber();
+
+      expect(component.trackingList).toEqual(trackingList);
     });
   });
 });
