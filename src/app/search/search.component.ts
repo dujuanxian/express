@@ -10,20 +10,30 @@ import { ITracking } from './tracking';
 })
 export class SearchComponent {
   number: string;
-  isInvalid = false;
   trackingList: ITracking[] = [];
+  errorMessage: string = null;
 
   constructor(
     private searchService: SearchService
   ) { }
 
   validateNumber() {
-    this.isInvalid = this.number.length !== 10 || !(new RegExp('^[0-9]*$').test(this.number));
+    if (this.number.length !== 10 || !(new RegExp('^[0-9]*$').test(this.number))) {
+      this.errorMessage = '请输入10位有效数字单号';
+    } else {
+      this.errorMessage = null;
+    }
   }
 
   searchNumber () {
-    this.searchService.getTrackingList(this.number).subscribe(trackings => {
-      this.trackingList = trackings.reverse();
-    });
+    this.searchService.getTrackingList(this.number).subscribe(
+      trackings => {
+        this.trackingList = trackings.reverse ();
+        this.errorMessage = null;
+      }, error => {
+        if (error.status === 404) {
+          this.errorMessage = error.message;
+        }
+      });
   }
 }
