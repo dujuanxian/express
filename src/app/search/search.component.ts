@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { SearchService } from './search.service';
+import { ITracking } from './tracking';
 
 @Component({
   selector: 'app-search',
@@ -10,7 +11,7 @@ import { SearchService } from './search.service';
 export class SearchComponent {
   number: string;
   isInvalid = false;
-  trackingList = [];
+  trackingList: ITracking[] = [];
 
   constructor(
     private searchService: SearchService
@@ -21,8 +22,8 @@ export class SearchComponent {
   }
 
   searchNumber () {
-    this.searchService.getTrackingList().subscribe(( response) => {
-      this.trackingList = response.data;
+    this.searchService.getTrackingList(this.number).subscribe(trackings => {
+      this.trackingList = trackings;
     });
   }
 }

@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
-import { of } from 'rxjs/internal/observable/of';
 import { Observable } from 'rxjs/internal/Observable';
+import { HttpClient } from '@angular/common/http';
+import { ITracking } from './tracking';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SearchService {
 
-  constructor() { }
+  constructor ( private http: HttpClient ) { }
 
-  getTrackingList(): Observable<any> {
-    return of(null);
+  getTrackingList(number: string): Observable<ITracking[]> {
+    return this.http.get<ITracking[]>(`/tracking?number=${number}`);
   }
 }

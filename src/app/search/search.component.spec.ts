@@ -3,8 +3,9 @@ import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core
 import { SearchComponent } from './search.component';
 import { FormsModule } from '@angular/forms';
 import { SearchService } from './search.service';
-import { throwError } from 'rxjs/internal/observable/throwError';
 import { of } from 'rxjs/internal/observable/of';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ITracking } from './tracking';
 
 describe('SearchComponent', () => {
   let component: SearchComponent;
@@ -14,7 +15,7 @@ describe('SearchComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ SearchComponent ],
-      imports: [ FormsModule ],
+      imports: [ FormsModule, HttpClientTestingModule ],
       providers: [ SearchService ]
     }).compileComponents();
   }));
@@ -76,8 +77,8 @@ describe('SearchComponent', () => {
       const trackingList = [{
         date: '2018-01-01 10:10',
         status: '已出库'
-      }];
-      spyOn(searchService, 'getTrackingList').and.returnValue(of({ data: trackingList }));
+      }] as ITracking[];
+      spyOn(searchService, 'getTrackingList').and.returnValue(of(trackingList));
 
       component.number = '1234567890';
       component.searchNumber();
