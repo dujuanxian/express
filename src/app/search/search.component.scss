@@ -9,7 +9,7 @@ h1 {
   font-size: 48px;
   font-weight: lighter;
   letter-spacing: 5px;
-  margin-bottom: 80px;
+  margin-bottom: 60px;
 }
 
 .search-input {
@@ -45,5 +45,41 @@ h1 {
     width: 600px;
     line-height: 60px;
     color: #ffea99;
+  }
+}
+
+.search-tracking-list {
+  width: 600px;
+  margin: 0 auto;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  background-color: rgba(255, 200, 200, 0.2);
+
+  ul, li {
+    list-style: none;
+  }
+
+  ul {
+    margin: 0;
+    padding: 40px 40px 60px;
+
+    li {
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+
+      .tracking-date {
+        color: rgb(205,200,200);
+      }
+
+      .tracking-status {
+        width: 370px;
+        color: #333232;
+      }
+
+      &:first-child .tracking-status {
+        color: #ffea99;
+      }
+    }
   }
 }

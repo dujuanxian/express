@@ -23,7 +23,7 @@ export class SearchComponent {
 
   searchNumber () {
     this.searchService.getTrackingList(this.number).subscribe(trackings => {
-      this.trackingList = trackings;
+      this.trackingList = trackings.reverse();
     });
   }
 }
